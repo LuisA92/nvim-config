@@ -160,14 +160,6 @@ return {
     },
 
     {
-        "lervag/wiki.vim",
-        lazy = false,
-        config = function()
-            require "configs.wikivim"
-        end,
-    },
-
-    {
         "dhruvasagar/vim-table-mode",
     },
 
@@ -370,5 +362,6 @@ return {
             --{ "<leader>p", "<cmd>PasteImage<cr>", desc = "Paste image from system clipboard" },
         },
     },
+    { "tpope/vim-fugitive" },
 }
 -- %%

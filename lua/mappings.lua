@@ -297,16 +297,6 @@ vim.api.nvim_set_keymap(
     { noremap = true, silent = false }
 )
 
-local languages = { "python", "lua" }
-
--- enable completion/diagnostics
--- defaults are true
-local completion = true
-local diagnostics = true
--- treesitter query to look for embedded languages
--- uses injections if nil or not set
-local tsquery = nil
-
 -- todo-comments.nvim
 vim.keymap.set("n", "]t", function()
     require("todo-comments").jump_next()

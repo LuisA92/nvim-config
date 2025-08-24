@@ -116,7 +116,7 @@ require("render-markdown").setup {
     },
     pipe_table = {
         -- Turn on / off pipe table rendering
-        enabled = true,
+        enabled = false,
     },
     -- Callouts are a special instance of a 'block_quote' that start with a 'shortcut_link'
     -- Can specify as many additional values as you like following the pattern from any below, such as 'note'
