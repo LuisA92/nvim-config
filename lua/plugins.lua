@@ -1,20 +1,11 @@
 return {
     -- colorschemes
-    { "rose-pine/neovim" },
-
     {
         "folke/tokyonight.nvim",
         lazy = false,
         priority = 1000,
         opts = {},
     },
-    -- {
-    --     "nvim-focus/focus.nvim",
-    --     version = "*",
-    --     config = function()
-    --         require("focus").setup()
-    --     end,
-    -- },
 
     -- Treesitter
     {
@@ -25,48 +16,20 @@ return {
         end,
     },
 
-    { "nvim-treesitter/playground" },
+    {
+        "nvim-treesitter/playground",
+    },
 
+    -- I/O
     {
         "stevearc/oil.nvim",
         opts = {},
-        dependencies = { { "echasnovski/mini.icons", opts = {} }, { "nvim-tree/nvim-web-devicons" } },
+        dependencies = {
+            { "echasnovski/mini.icons", opts = {} },
+            { "nvim-tree/nvim-web-devicons" },
+        },
         config = function()
             require "configs.oil"
-        end,
-    },
-
-    -- Directory Tree
-    {
-        "nvim-neo-tree/neo-tree.nvim",
-        branch = "v3.x",
-        lazy = false,
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-            "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
-            "MunifTanjim/nui.nvim",
-            -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
-        },
-
-        config = function()
-            require("neo-tree").setup()
-        end,
-    },
-    -- Symbols
-    {
-        "stevearc/aerial.nvim",
-        config = function()
-            require "configs.aerial"
-        end,
-    },
-
-    -- Buffer Line
-    {
-        "akinsho/bufferline.nvim",
-        lazy = false,
-        dependencies = "nvim-tree/nvim-web-devicons",
-        config = function()
-            require "configs.bufferline"
         end,
     },
 
@@ -80,16 +43,6 @@ return {
             require "configs.lualine"
         end,
     },
-
-    -- clipboard
-    {
-        "AckslD/nvim-neoclip.lua",
-        dependencies = { "kkharji/sqlite.lua", module = "sqlite" },
-        config = function()
-            require("neoclip").setup()
-        end,
-    },
-
     -- Terminal
     {
         "akinsho/toggleterm.nvim",
@@ -104,17 +57,6 @@ return {
         config = function()
             require("sessions").setup()
         end,
-    },
-
-    {
-        "bngarren/checkmate.nvim",
-        ft = "markdown", -- Lazy loads for Markdown files matching patterns in 'files'
-        opts = {
-            todo_markers = {
-                unchecked = "[ ]",
-                checked = "[x]",
-            },
-        },
     },
 
     {
@@ -134,15 +76,16 @@ return {
         end,
     },
 
+    -- LSP
+
     {
-        "WhoIsSethDaniel/toggle-lsp-diagnostics.nvim",
-        config = function()
-            require("toggle_lsp_diagnostics").init()
-        end,
+        --to install LSPs
+        "mason-org/mason.nvim",
+        opts = {},
     },
 
-    -- LSP
     {
+        -- Autocompletion
         "saghen/blink.cmp",
         version = "1.*",
         dependencies = {
@@ -157,9 +100,6 @@ return {
         opts_extend = { "sources.default" },
     },
 
-    { "williamboman/mason.nvim" },
-    { "williamboman/mason-lspconfig.nvim" },
-
     {
         "neovim/nvim-lspconfig",
         dependencies = { "saghen/blink.cmp" },
@@ -170,6 +110,15 @@ return {
             require("configs.nvim-lspconfig").setup(opts)
         end,
     },
+
+    {
+        "WhoIsSethDaniel/toggle-lsp-diagnostics.nvim",
+        config = function()
+            require("toggle_lsp_diagnostics").init()
+        end,
+    },
+
+    -- Formatter
 
     {
         "stevearc/conform.nvim",
@@ -192,55 +141,13 @@ return {
 
     -- Misc
     {
-        "folke/snacks.nvim",
-        priority = 1000,
-        lazy = false,
-        opts = function()
-            return require("configs.snacks").opts
-        end,
-        keys = function()
-            return require("configs.snacks").keys
-        end,
-    },
-
-    -- Telescope
-    { "kiyoon/telescope-insert-path.nvim" },
-
-    { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-    {
-        "nvim-telescope/telescope.nvim",
-        tag = "0.1.5",
-        -- or                              , branch = '0.1.x',
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-            "debugloop/telescope-undo.nvim",
-            "nvim-telescope/telescope-file-browser.nvim",
-        },
-
-        config = function()
-            require "configs.telescope"
-        end,
-    },
-
-    { "nvim-telescope/telescope-media-files.nvim" },
-
-    {
-        "LuisA92/telescope-bibtex.nvim",
-        dependencies = { "nvim-telescope/telescope.nvim" },
-        config = function()
-            require("telescope").load_extension "bibtex"
-        end,
-    },
-
-    {
         "LuisA92/swenv.nvim",
         config = function()
             require "configs.swenv"
         end,
     },
 
-    -- Markdown, LaTeX, and Notes
-
+    -- Markdown, LaTeX, Jupyter, Notes
     {
         "LuisA92/peek.nvim",
         event = { "VeryLazy" },
@@ -261,13 +168,8 @@ return {
     },
 
     {
-        "glepnir/template.nvim",
-        config = function()
-            require "configs.template"
-        end,
+        "dhruvasagar/vim-table-mode",
     },
-
-    { "dhruvasagar/vim-table-mode" },
 
     {
         "lervag/vimtex",
@@ -300,102 +202,6 @@ return {
         config = function()
             require "configs.zk-nvim"
         end,
-    },
-
-    -- REPL
-
-    {
-        "Vigemus/iron.nvim",
-        config = function()
-            require "configs.iron"
-        end,
-    },
-
-    -- Window management
-    {
-        "mrjones2014/smart-splits.nvim",
-        config = function()
-            require "configs.smart-splits"
-        end,
-    },
-
-    {
-        "famiu/bufdelete.nvim",
-        lazy = false,
-    },
-
-    -- QOL
-    {
-        "max397574/better-escape.nvim",
-        config = function()
-            require "configs.betterescape"
-        end,
-    },
-
-    { "tpope/vim-repeat" },
-
-    -- Programming
-
-    {
-        "folke/todo-comments.nvim",
-        dependencies = { "nvim-lua/plenary.nvim" },
-        config = function()
-            require("todo-comments").setup()
-        end,
-    },
-
-    {
-        "danymat/neogen",
-        config = function()
-            require("neogen").setup {}
-        end,
-    },
-
-    {
-        "kylechui/nvim-surround",
-        version = "*", -- Use for stability; omit to use `main` branch for the latest features
-        event = "VeryLazy",
-        config = function()
-            require("nvim-surround").setup {
-
-                keymaps = {
-                    insert = "<C-g>s",
-                },
-            }
-        end,
-    },
-    -- {
-    --     "roobert/surround-ui.nvim",
-    --     dependencies = {
-    --         "kylechui/nvim-surround",
-    --         "folke/which-key.nvim",
-    --     },
-    --     config = function()
-    --         require("surround-ui").setup {
-    --             root_key = "S",
-    --         }
-    --     end,
-    -- },
-    {
-        "windwp/nvim-autopairs",
-        lazy = false,
-        --event = "InsertEnter",
-        config = function()
-            require "configs.autopairs"
-        end,
-    },
-
-    {
-        "HakonHarnes/img-clip.nvim",
-        event = "VeryLazy",
-        opts = {
-            dir_path = "/Users/luis/master/notes/attachments/",
-            use_absolute_path = true,
-        },
-        keys = {
-            -- suggested keymap
-            --{ "<leader>p", "<cmd>PasteImage<cr>", desc = "Paste image from system clipboard" },
-        },
     },
 
     {
@@ -439,52 +245,130 @@ return {
         end,
     },
 
+    -- REPL to run python
+
+    {
+        "Vigemus/iron.nvim",
+        config = function()
+            require "configs.iron"
+        end,
+    },
+
+    -- Window management
+    {
+        "mrjones2014/smart-splits.nvim",
+        config = function()
+            require "configs.smart-splits"
+        end,
+    },
+
+    -- Slight quality of life improvmenets
+    {
+        "folke/snacks.nvim",
+        priority = 1000,
+        lazy = false,
+        opts = function()
+            return require("configs.snacks").opts
+        end,
+        keys = function()
+            return require("configs.snacks").keys
+        end,
+    },
+
+    {
+        "max397574/better-escape.nvim",
+        config = function()
+            require "configs.betterescape"
+        end,
+    },
+
+    {
+        "tpope/vim-repeat",
+    },
+
+    -- Programming
+
+    {
+        "folke/todo-comments.nvim",
+        dependencies = { "nvim-lua/plenary.nvim" },
+        config = function()
+            require("todo-comments").setup()
+        end,
+    },
+
+    {
+        "danymat/neogen",
+        config = function()
+            require("neogen").setup {
+
+                enabled = true,
+                languages = {
+                    python = {
+                        template = {
+                            annotation_convention = "google_docstrings", -- or "numpy", "reST"
+                        },
+                    },
+                },
+            }
+        end,
+    },
+
+    {
+        "kylechui/nvim-surround",
+        version = "*", -- Use for stability; omit to use `main` branch for the latest features
+        event = "VeryLazy",
+        config = function()
+            require("nvim-surround").setup {
+
+                keymaps = {
+                    insert = "<C-g>s",
+                },
+            }
+        end,
+    },
+
+    {
+        "windwp/nvim-autopairs",
+        lazy = false,
+        --event = "InsertEnter",
+        config = function()
+            require "configs.autopairs"
+        end,
+    },
+
+    {
+        "stevearc/aerial.nvim",
+        config = function()
+            require "configs.aerial"
+        end,
+    },
+
     -- Misc
 
-    { "nvim-pack/nvim-spectre" }, -- search and replace
-
-    { "nvim-lua/plenary.nvim" },
-
     {
-        "vhyrro/luarocks.nvim",
-        priority = 1000,
-        config = true,
+        "nvim-pack/nvim-spectre",
     },
 
-    { "junegunn/fzf" },
-
-    { "junegunn/fzf.vim" },
-
-    -- Folds
     {
-        "kevinhwang91/nvim-ufo",
-        dependencies = { "kevinhwang91/promise-async" },
-        config = function()
-            require "configs.nvim-ufo"
-        end,
-    },
-
-    -- vim keys and vim reference
-    {
-        "shahshlok/vim-coach.nvim",
-        dependencies = {
-            "folke/snacks.nvim",
+        "j-hui/fidget.nvim",
+        opts = {
+            notification = {
+                override_vim_notify = true,
+            },
         },
-        config = function()
-            require("vim-coach").setup()
-        end,
+    },
+
+    {
+        "HakonHarnes/img-clip.nvim",
+        event = "VeryLazy",
+        opts = {
+            dir_path = "/Users/luis/master/notes/attachments/",
+            use_absolute_path = true,
+        },
         keys = {
-            { "<leader>?", "<cmd>VimCoach<cr>", desc = "Vim Coach" },
+            -- suggested keymap
+            --{ "<leader>p", "<cmd>PasteImage<cr>", desc = "Paste image from system clipboard" },
         },
-    },
-
-    -- UI
-    { "stevearc/dressing.nvim" },
-
-    {
-        "rcarriga/nvim-notify",
-        config = function()
-            require("notify").setup {}
-        end,
     },
 }
+-- %%

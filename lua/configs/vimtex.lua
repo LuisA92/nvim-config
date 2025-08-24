@@ -39,7 +39,7 @@ vim.g.vimtex_compiler_latexmk = {
 
 vim.g.vimtex_compiler_engine = "lualatex" -- Use LuaTeX as the compilation engine
 vim.g.tex_flavor = "latex"
-vim.g.vimtex_view_method = "skim"
+vim.g.vimtex_view_general_viewer = "fancy-cat"
 --vim.g.vimtex_view_method = "texshop"
 --vim.g.vimtex_view_method = "mupdf"
 --vim.g.vimtex_view_method = "sioyek"

@@ -13,6 +13,7 @@ end
 
 vim.opt.rtp:prepend(lazypath)
 
+-- use space bar as leader
 vim.g.mapleader = " "
 
 require("lazy").setup "plugins"

@@ -8,18 +8,6 @@ require("nvim-treesitter.configs").setup {
     ensure_installed = { "latex", "markdown", "markdown_inline", "query", "vimdoc", "vim" },
     highlight = {
         enable = true,
-        additional_vim_regex_highlighting = {
-            --"latex",
-            --"mermaid",
-            --"lua",
-            --"vim",
-            --"markdown",
-            --"tex",
-            --"org",
-            --"neorg",
-            --"norg",
-            --"tex",
-        },
     },
     playground = {
         enable = true,
@@ -40,11 +28,3 @@ require("nvim-treesitter.configs").setup {
         },
     },
 }
-
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = "markdown",
-    callback = function()
-        vim.opt_local.foldmethod = "expr"
-        vim.opt_local.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-    end,
-})

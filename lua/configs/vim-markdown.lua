@@ -1,4 +1,4 @@
-vim.g.vim_markdown_folding_disabled = 1
+vim.g.vim_markdown_folding_disabled = 0
 --vim.g.vim_markdown_folding_style_pythonic = 1
 vim.cmd [[
     let g:vim_markdown_conceal_code_blocks = 1

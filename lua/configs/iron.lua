@@ -10,10 +10,10 @@ iron.setup {
             sh = {
                 -- Can be a table or a function that
                 -- returns a table (see below)
-                command = { "bash" },
+                command = { "zsh" },
             },
-            python = require('iron.fts.python').ipython
-            --python = {command = {"ipython3"}}
+            python = require("iron.fts.python").ipython,
+            -- python = { command = { "ipython" } },
         },
         -- How the repl window will be displayed
         -- See below for more information

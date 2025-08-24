@@ -332,7 +332,7 @@ cmp.setup.cmdline(":", {
 --masonConfig
 require("mason").setup()
 require("mason-lspconfig").setup {
-    ensure_installed = { "ltex", "cssls", "ruff" },
+    ensure_installed = { "cssls" },
 }
 
 local lspconfig = require "lspconfig"
@@ -399,8 +399,10 @@ require("lspconfig").pyright.setup {
                 autoSearchPaths = true,
                 useLibraryCodeForTypes = true,
                 diagnosticMode = "workspace",
+                venvPath = ".",
+                venv = ".venv",
 
-                venvPath = "/Users/luis/micromamba/envs/",
+                -- venvPath = "/Users/luis/micromamba/envs/",
                 --venv = "integrator",
             },
         },

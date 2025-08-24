@@ -17,11 +17,6 @@ vim.cmd "autocmd WinResized * wincmd ="
 g.ctrlp_match_func = { match = "cpsm#CtrlPMatch" }
 
 vim.cmd [[
- if has('nvim') && !empty($CONDA_PREFIX)
-  let g:python3_host_prog = $CONDA_PREFIX . '/bin/python3.10'
-else
-	let g:python3_host_prog = '/Library/Frameworks/Python.framework/Versions/3.9/bin/python3'
-endif
 let g:copilot_filetypes = {
       \ 'markdown': v:false,
       \ }
@@ -58,17 +53,6 @@ vim.diagnostic.config {
     underline = false,
 }
 
-----ale linter
---vim.cmd [[
---syntax on
---let g:ale_fix_on_save = 1
---let g:ale_lsp_suggestions = 0
---let g:ale_set_signs = 1
---let g:ale_virtualtext_cursor=1
---let g:ale_use_neovim_diagnostics_api = 0
---let g:ale_tex_proselint_executable='/usr/local/bin/proselint'
---]]
-
 vim.cmd [[
     highlight Normal ctermbg=none guibg=none
     highlight NonText ctermbg=none guibg=none
@@ -80,8 +64,7 @@ vim.cmd [[
   let g:netrw_browsex_viewer = "open"  " For macOS
 ]]
 
---vim.cmd "colorscheme rose-pine-main"
---vim.cmd "colorscheme lackluster"
+--Colorscheme
 vim.cmd "colorscheme tokyonight-night"
 
 vim.cmd [[  function OpenMarkdownPreview (url)
@@ -96,13 +79,65 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.opt_local.formatoptions:remove { "r", "o" }
     end,
 })
+--
+-- vim.api.nvim_create_autocmd("FileType", {
+--     pattern = "markdown",
+--     callback = function()
+--         vim.opt_local.foldmethod = "expr"
+--         vim.opt_local.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+--     end,
+-- })
 
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = "markdown",
+vim.cmd "filetype plugin on"
+
+-- Smart Python host detection for Neovim
+local function detect_python()
+    local cwd = vim.fn.getcwd()
+    local candidates = {
+        cwd .. "/.venv/bin/python",
+        cwd .. "/venv/bin/python",
+    }
+
+    for _, p in ipairs(candidates) do
+        if vim.fn.executable(p) == 1 then
+            return p
+        end
+    end
+
+    -- Conda fallback
+    local conda = vim.env.CONDA_PREFIX
+    if conda and vim.fn.executable(conda .. "/bin/python") == 1 then
+        return conda .. "/bin/python"
+    end
+
+    -- pyenv fallback (optional)
+    local ok, pyenv_python = pcall(function()
+        return vim.fn.systemlist("pyenv which python3")[1]
+    end)
+    if ok and pyenv_python and vim.fn.executable(pyenv_python) == 1 then
+        return pyenv_python
+    end
+
+    -- System python
+    if vim.fn.executable "python3" == 1 then
+        return vim.fn.exepath "python3"
+    end
+    return "python"
+end
+
+-- Set provider at startup
+vim.g.python3_host_prog = detect_python()
+
+-- Update provider whenever you change directories
+vim.api.nvim_create_autocmd("DirChanged", {
     callback = function()
-        vim.opt_local.foldmethod = "expr"
-        vim.opt_local.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+        local p = detect_python()
+        if p ~= vim.g.python3_host_prog then
+            vim.g.python3_host_prog = p
+        end
     end,
 })
 
-vim.cmd "filetype plugin on"
+vim.cmd [[
+let g:typst_pdf_viewer =  'tdf'
+    ]]

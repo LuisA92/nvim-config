@@ -80,3 +80,6 @@ require("workspaces").setup {
         },
     },
 }
+
+--- key mapping
+vim.keymap.set("n", "<Space>fp", "<Cmd>WorkspacesOpen<CR>", { silent = true })

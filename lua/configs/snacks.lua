@@ -6,11 +6,12 @@ M.opts = {
     explorer = { enabled = false },
     indent = { enabled = false },
     input = { enabled = false },
-    picker = { enabled = true },
+    picker = { enabled = true, ignored = true },
     notifier = { enabled = false },
     quickfile = { enabled = false },
     scope = { enabled = false },
     scroll = { enabled = false },
+    bufdelete = { enabled = true },
     scratch = { enabled = true },
     statuscolumn = { enabled = false },
     words = { enabled = true },
@@ -80,7 +81,7 @@ M.keys = {
         desc = "Smart Find Files",
     },
     {
-        "<leader>,",
+        "<leader>fb",
         function()
             Snacks.picker.buffers()
         end,
@@ -108,11 +109,32 @@ M.keys = {
         desc = "Notification History",
     },
     {
+        "<leader>ff",
+        function()
+            require("snacks").picker.files { ignored = false, hidden = false }
+        end,
+        desc = "Find files",
+    },
+    {
+        "<leader>fF",
+        function()
+            require("snacks").picker.files { ignored = true, hidden = true }
+        end,
+        desc = "Find ALL files (ignored too)",
+    },
+    {
         "<leader>e",
         function()
-            Snacks.explorer()
+            require("snacks").explorer { ignored = false, hidden = false }
         end,
         desc = "File Explorer",
+    },
+    {
+        "<leader>E",
+        function()
+            require("snacks").explorer { ignored = true, hidden = true }
+        end,
+        desc = "File Explorer (ALL)",
     },
 }
 
